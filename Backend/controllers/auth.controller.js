@@ -104,9 +104,15 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
-    res.clearCookie("jwt");
-    res.status(201).json({ success: true, message: "Logout successful" });
-}
+    res.clearCookie("jwt", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+    });
+
+    res.status(200).json({ success: true, message: "Logout successful" });
+};
+  
 
 export const onboard = async (req, res) => {
     try {
