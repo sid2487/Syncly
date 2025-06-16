@@ -14,7 +14,7 @@ import PageLoader from "./components/PageLoader.jsx";
 import useAuthUser from "./hooks/useAuthUser.jsx"
 import Layout from "./components/Layout.jsx";
 import { useThemeStore } from "./store/useThemeStore.jsx"
-import Friends from "./components/Friends.jsx";
+import Friends from "./components/FriendsPage.jsx";
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
