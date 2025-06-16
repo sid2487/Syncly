@@ -3,23 +3,26 @@ import User from "../models/User.model.js"
 
 export const getRecommendedUsers = async (req, res) => {
     try {
-        const currentUserId = req.user.id;
-        const currentUser = req.user;
-        
+        const currentUserId = req.user._id;
+
+        // Fetch current user’s full record to access their friends
+        const currentUser = await User.findById(currentUserId).select("friends");
+
+        // Create list of user IDs to exclude
+        const excludeIds = [currentUserId, ...(currentUser.friends || [])];
+
         const recommendedUsers = await User.find({
-            $and: [
-                { _id: { $ne: currentUserId }}, // exclude current user
-                { _id: { $ne: currentUser.friends }}, // exclude current user's friends
-                { isOnBoarded: true },
-            ]
-        });
+            _id: { $nin: excludeIds }, // Exclude self + friends
+            isOnBoarded: true, // Only show onboarded users
+        }).select("fullName profilePic nativeLanguage learningLanguage");
 
         res.status(200).json(recommendedUsers);
     } catch (error) {
         console.error("Error in getRecommendedUsers controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
+  
 
 export const getMyFriends = async (req, res) => {
     try {
@@ -36,7 +39,7 @@ export const getMyFriends = async (req, res) => {
 
 export const sendFriendRequest = async (req, res) => {
     try {
-        const myId = req.use.id;
+        const myId = req.user.id;
         const { id: recipientId } = req.params;
 
         if(myId === recipientId ) {

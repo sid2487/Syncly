@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import useAuthUser from '../hooks/useAuthUser'
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from "react";
+import useAuthUser from "../hooks/useAuthUser";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { completeOnboarding } from "../lib/api";
 import {
   LoaderIcon,
   MapPinIcon,
   ShipWheelIcon,
   ShuffleIcon,
 } from "lucide-react";
-import { LANGUAGES } from '../constants';
-import { completeOnboarding } from '../lib/api';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router';
+import { LANGUAGES } from "../constants";
 
 const OnboardingPage = () => {
   const { authUser } = useAuthUser();
@@ -25,32 +24,26 @@ const OnboardingPage = () => {
     profilePic: authUser?.profilePic || "",
   });
 
-  const navigate = useNavigate();
-
   const { mutate: onboardingMutation, isPending } = useMutation({
     mutationFn: completeOnboarding,
     onSuccess: () => {
       toast.success("Profile onboarded successfully");
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
-      navigate("/")
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.error(error.response.data.message);
     },
   });
 
- 
-
- 
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
     onboardingMutation(formState);
   };
 
   const handleRandomAvatar = () => {
-    const idx = Math.floor(Math.random() * 100) + 1;
+    const idx = Math.floor(Math.random() * 100) + 1; 
     const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
 
     setFormState({ ...formState, profilePic: randomAvatar });
