@@ -40,6 +40,7 @@
 ---
 
 ## 🌍 Live Demo
+** I am using free tier of render so it might take some time to open.
 
 | Platform | URL |
 |---------|-----|
