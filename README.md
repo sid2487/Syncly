@@ -44,7 +44,7 @@
 
 | Platform | URL |
 |---------|-----|
-| **Frontend (Vercel)** | [https://syncly-git-main-siddharths-projects-a91d5754.vercel.app](https://syncly-git-main-siddharths-projects-a91d5754.vercel.app) |
+| **Live Link** | [https://syncly-git-main-siddharths-projects-a91d5754.vercel.app](https://syncly-git-main-siddharths-projects-a91d5754.vercel.app) |
 
 ---
 
