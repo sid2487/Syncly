@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login } from '../lib/api';
-import { Link, ShipWheelIcon } from 'lucide-react';
+import { ShipWheelIcon } from 'lucide-react';
+import { Link } from 'react-router';
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
@@ -111,7 +112,7 @@ const LoginPage = () => {
 
                   <div className="text-center mt-4">
                     <p className="text-sm">
-                      Don't have an account?{" "}
+                      Don't have an account
                       <Link
                         to="/signup"
                         className="text-primary hover:underline"
